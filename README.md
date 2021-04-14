@@ -15,3 +15,4 @@ https://www.nxp.com/design/software/embedded-software/i-mx-software/embedded-lin
 To get started, you'll need to create an account before you can download and use any of the software or documents. This is free and quick.
 
 Documentation: https://www.nxp.com/design/software/embedded-software/i-mx-software/embedded-linux-for-i-mx-applications-processors:IMXLINUX?tab=Documentation_Tab
+
