@@ -1,5 +1,33 @@
 # Getting Started with the DevKit
 
+## Hardware Overview
+
+Compute Module:
+
+    • i.MX 8M Mini applications processor with up to five cores:
+      – 4× Arm® Cortex®-A53
+      – 1× Arm Cortex-M4
+    • 2 GB, 32-bit LPDDR4
+    • eMMC 5.1, 16 GB
+    • 32MB QSPI NOR flash
+    • Power Management IC (PMIC)
+    • MIMO 1x1 Wi-Fi 802.11a/b/g/n/ac and BT4.1
+
+Base Board:
+
+    • MicroSD card connector
+    • 2 USB2.0 Type-C connectors, Port2 is the only power supply port
+    • 1 Gbps Ethernet
+    • Mini-SAS MIPI-DSI connector for display
+    • Mini-SAS MIPI-CSI connector for camera
+    • USB to serial converter for debug
+    • Infrared receiver
+    • LEDs for power indication and general-purpose use
+    • M.2 connector for Wi-Fi/BT (PCIe, I2C, etc.)
+    • 3.5 mm audio jack for amplified speakers
+
+![](https://github.com/mworster/imx8MMini-EVK/blob/main/i.MX_8M_EVK_HW.jpg)
+
 ## Drivers
 The serial communication with the EVK may, or may not, require drivers to be installed. Connect the 
 micro-B end of a USB cable into debug port J1701 and the other end of the cable to a PC acting as a
