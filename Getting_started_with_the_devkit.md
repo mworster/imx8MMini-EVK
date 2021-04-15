@@ -28,6 +28,8 @@ Base Board:
 
 ![](https://github.com/mworster/imx8MMini-EVK/blob/main/i.MX_8M_EVK_HW.jpg)
 
+Resource[1] list this hardware information and more.
+
 ## Drivers
 The serial communication with the EVK may, or may not, require drivers to be installed. Connect the 
 micro-B end of a USB cable into debug port J1701 and the other end of the cable to a PC acting as a
@@ -43,65 +45,75 @@ the latest drivers:
 
 ![](https://github.com/mworster/imx8MMini-EVK/blob/main/InstallDrivers.jpg)
 
+Resource [1] contains driver information.
 
 ## Initial Booting
 
-Once the drivers are installed you can initially boot the board and get output. The DevKit comes with
-a pre-loaded µSD card and is good to boot from it on arival. 
+Once the drivers are installed you can initially boot the board and get output. The EVK comes with
+a pre-loaded Android image in eMMC and is good to boot from it on arival. 
+
 
 ### Setup
 
 The wiring setup is pretty simple. 
 
-  1. Connect power (USB-C near Ethernet), the PC is enough to run it. 
-  2. Connect µUSB (near HDMI) for serial communication. 
+  1. Verify boot switches are set to boot from eMMC.
+      * SW1101 - 0110110001
+      * SW1102 - 0001010100
+  2. Connect µUSB for serial communication. 
   3. Start terminal output (see next section)
-  4. reboot the board
+  4. Connect the USB Type-C plug of the Power Supply to J302 (USB Type-C Port2), then power up the board using switch SW101.
 
-Step 4 isn't strictly required, but the ordering is important and that means you'll initially miss the
-boot logs, just by default. 
+See resource [1] for setup and other boot modes.
 
 ### Getting Terminal Output
 
-Resource [4] contains all the information for terminal interactions for both Linux and Windows both local
-and remote. Specifcally I setup for local on Windows 10. Initially I attempted PuTTY for serial 
-communication, however that didn't work. Not sure why. However [TeraTerm](https://tera-term.en.lo4d.com/windows)
-works perfectly. 
+Resource [1] contains the basics of drivers and terminal setup. When interacting with the i.MX8M EVK, there should be 2 serial
+ports listed in the device manager. The first one is for the M4 and the second is for the A53. When you initially check your 
+setting in the device manager you should see something like the below reference image:
+![](https://github.com/mworster/imx8MMini-EVK/blob/main/no_imx8m_plug.jpg)
+
+After Setup Step 2 (before power is applied), the device manager should update to show the two new ports:
+![](https://github.com/mworster/imx8MMini-EVK/blob/main/yes_imx8m_plug.jpg)
+
+In this section I specifcally setup for Windows 10. On Windows I used [TeraTerm](https://tera-term.en.lo4d.com/windows)
+for serial communication. 
   
   1. Download TeraTerm and install on your PC
-  2. Check device manager for the STLink COM port number: `STMicroelectronics STLink Virtual COM Port (COM6)`
-  3. Open TeraTerm to COMX(X=6 for me) and set to a `115200` baud rate
+  2. Check device manager for the A53 COM port number: `USB Serial Port (COMX)`
+  3. Open TeraTerm to COMX(larger of the two, 8 in my case) and set to a `115200` baud rate
 
 ### Initial Output
 
 Once the boot is successful and TeraTerm is connected and gathering data as it should, you'll see something
 along the lines of the below (truncated) output:
 
-    NOTICE:  CPU: STM32MP157AAC Rev.B
-    NOTICE:  Model: STMicroelectronics STM32MP157C-DK2 Discovery Board
-    NOTICE:  Board: MB1272 Var1 Rev.C-01
-    INFO:    Reset reason (0x14):
-    INFO:      Pad Reset from NRST
     ...
-    INFO:    SP_MIN: Initializing runtime services
-    INFO:    SP_MIN: Preparing exit to normal world
+    U-Boot 2018.03 (Dec 19 2018 - 17:39:10 +0800)
 
-    U-Boot 2018.11-stm32mp-r4 (Jun 25 2020 - 12:01:15 +0000)
-
-    CPU: STM32MP157AAC Rev.B
-    Model: STMicroelectronics STM32MP157C-DK2 Discovery Board
+    CPU:   Freescale i.MX8MMQ rev1.0 1800 MHz (running at 1200 MHz)
+    CPU:   Commercial temperature grade (0C to 95C) at 35C
+    Reset cause: POR
+    Model: FSL i.MX8MM EVK board
+    DRAM:  2 GiB
+    TCPC:  Vendor ID [0x1fc9], Product ID [0x5110], Addr [I2C1 0x52]
+    Power supply on USB2
+    TCPC:  Vendor ID [0x1fc9], Product ID [0x5110], Addr [I2C1 0x50]
+    MMC:   FSL_SDHC: 0, FSL_SDHC: 1
+    Loading Environment from MMC... *** Warning - bad CRC, using default environment
     ...
-    XIP Kernel Image ... OK
-    Using Device Tree in place at c4000000, end c4014f69
+    Booting using the fdt blob at 0x43400000
+    Using Device Tree in place at 0000000043400000, end 000000004340da7d
 
     Starting kernel ...
 
     [    0.000000] Booting Linux on physical CPU 0x0
-    [    0.000000] Linux version 4.19.94 (oe-user@oe-host) (gcc version 8.2.0 (GCC)) #1 SMP PREEMPT Thu Jun 25 11:54:35 UTC 2020
-    [    0.000000] CPU: ARMv7 Processor [410fc075] revision 5 (ARMv7), cr=10c5387d    
+    [    0.000000] Linux version 4.14.78 (bamboo@szandroidmpu-PowerEdge-T430) (gcc version 4.9.x 20150123 (prerelease) (GCC)) #1 SMP PREEMPT Wed Dec 19 17:42:18 CST 2018
+    [    0.000000] Boot CPU: AArch64 Processor [410fd034]
+    [    0.000000] Machine model: FSL i.MX8MM EVK board 
     ...
 
-This shows everything is booting successfully and you have a 2018.11 u-boot with a 4.19.94 kernel.
+This shows everything is booting successfully and you have a 2018.03 u-boot with a 4.14.78 kernel. See Resource [2] for full initial log.
 
 ## Flashing New Images
 
@@ -341,8 +353,8 @@ Generated files are :
 
 ## Resources
 
-1. https://www.st.com/resource/en/user_manual/dm00591354-discovery-kits-with-stm32mp157-mpus-stmicroelectronics.pdf
-2. https://my.st.com/content/my_st_com/en/products/development-tools/software-development-tools/stm32-software-development-tools/stm32-utilities/stsw-link009.license=1610949972923.product=STSW-LINK009.version=2.0.1.html
+1. https://github.com/mworster/imx8MMini-EVK/blob/main/8MMINIEVKQSG.PDF
+2. https://github.com/mworster/imx8MMini-EVK/blob/main/initial_eeprom_boot.log
 3. https://wiki.st.com/stm32mpu/wiki/STM32MP15_Discovery_kits_-_Starter_Package
 4. https://wiki.st.com/stm32mpu/wiki/How_to_get_Terminal
 5. https://wiki.st.com/stm32mpu/wiki/STM32MP15_Discovery_kits_-_Starter_Package#Downloading_the_image_and_flashing_it_on_the_board
