@@ -1,23 +1,20 @@
 # Getting Started with the DevKit
 
 ## Drivers
-Most of this information comes, indirectly, from [1] 
+The serial communication with the EVK may, or may not, require drivers to be installed. Connect the 
+micro-B end of a USB cable into debug port J1701 and the other end of the cable to a PC acting as a
+host terminal. If the device manager (Windows) shows an unknown device then you'll need to download
+and install drivers.
 
-    Before connecting STM32MP157A-DK1 or STM32MP157C-DK2 to a Windows® (7, 8, or 10) PC via USB, 
-    a driver for ST-LINK/V2.1 must be installed (not required for Windows® 10). It is available from 
-    the www.st.com website.In case the STM32MP157A-DK1 or STM32MP157C-DK2 Discovery kit is connected
-    to the PC before the driver isinstalled, some Discovery kit interfaces may be declared as 
-    “Unknown” in the PC device manager. In this case,the user must install the dedicated driver 
-    files, and update the driver of the connected device from the devicemanager.
+Windows users may need to update the serial drivers on your computer. The drivers can be found at
+https://www.ftdichip.com/Drivers/VCP.htm
 
-    The ST-LINK/V2-1 embeds a firmware upgrade mechanism for in-situ upgrade through the USB port. 
-    As firmwaremay evolve during the lifetime of the ST-LINK/V2-1 product (addition of new 
-    functionalities, bug fixes, or supportof new microprocessor families), it is recommended to visit
-    periodically the www.st.com website before starting touse the STM32MP157A-DK1 or STM32MP157C-DK2
-    Discovery kit to stay up-to-date with the latest firmwareversion.
+Assuming a Windows setup, you'll want to navigate to the VCP Driver page and scroll down to find
+the `setup executable` link. That will lead you to a downloadable .exe file with a wizard to install
+the latest drivers:
 
-The driver refered to by the above paragraphs can be found at [2] the "STSW-LINK009". Once downloaded, this can be
-installed via the `stlink_winusb_install.bat` in administrator mode.
+![](https://github.com/mworster/imx8MMini-EVK/blob/main/InstallDrivers.jpg)
+
 
 ## Initial Booting
 
