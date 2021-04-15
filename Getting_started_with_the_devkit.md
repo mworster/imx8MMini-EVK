@@ -71,9 +71,11 @@ See resource [1] for setup and other boot modes.
 Resource [1] contains the basics of drivers and terminal setup. When interacting with the i.MX8M EVK, there should be 2 serial
 ports listed in the device manager. The first one is for the M4 and the second is for the A53. When you initially check your 
 setting in the device manager you should see something like the below reference image:
+
 ![](https://github.com/mworster/imx8MMini-EVK/blob/main/no_imx8m_plug.jpg)
 
 After Setup Step 2 (before power is applied), the device manager should update to show the two new ports:
+
 ![](https://github.com/mworster/imx8MMini-EVK/blob/main/yes_imx8m_plug.jpg)
 
 In this section I specifcally setup for Windows 10. On Windows I used [TeraTerm](https://tera-term.en.lo4d.com/windows)
