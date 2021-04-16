@@ -119,30 +119,31 @@ This shows everything is booting successfully and you have a 2018.03 u-boot with
 
 ## Flashing New Images
 
-### Default Images
+For many years, NXP used MFGTools for flashing images on the i.MX family of devices. As of 2018 this has been replaced with the Universal 
+Update Utility (UUU).
 
-ST has various ["Packages"](https://wiki.st.com/stm32mpu/wiki/Which_STM32MPU_Embedded_Software_Package_better_suits_your_needs). In a nutshell:
-  * Starter - This is prebuilt binaries 
-  * Developer - Gives the ability to build a STLinux based Kernel, Opp-Tee applications and u-boot binary
-  * Distribution - Yocto based build, full RFS as well as low level embedded portions
+### Universal Update Utility (UUU) Overview
 
-### Starter Images
+NXP's UUU is used for loading bootloader/recovering devices over USB recovery (SDP) protocol. It also loads any binary in RAM over USB for
+flashing. It also has advanced scripting and fastboot protocol support. Universal use on Linux, Windows, and MacOS. 
 
-Initially, it's important to understand flashing new images over anything else. In that spirt, we start with the Starter Package and the 
-pregenerated images[6] that ST has to offer. Once the starter images tarball are downloaded and extracted we see the following file structure:
+The source lives at: https://github.com/NXPmicro/mfgtools
 
-    stm32mp1-openstlinux-5-4-dunfell-mp1-20-11-12
-    └──images
-       └──stm32mp1
-          ├── arm-trusted-firmware //binaries for FSBL partitions and serial boot mode
-          |   ├── *.optee.stm32      // optee boot chain
-          |   ├── *.serialboot.stm32 // STM32CubeProgrammer
-          |   └── *.trusted.stm32    // trusted boot chain (default)
-          ├── bootloader  // U-Boot binaries for FSBL, SSBL partitions and supported boot chains
-          ├── flashlayout_st-image-weston // Flash layout files (text description of the partitions) for the supported boot chains on supported boot devices and boards
-          ├── optee // Optee binaries for TEE partitions required for optee boot chains
-          ├── scripts // helper scripts
-          └── other files...  // binaries for other partitions on eMMC, microSD card, and NAND devices
+And releases are available at: https://github.com/NXPmicro/mfgtools/releases
+
+The UUU is a command line program, so clicking on the `uuu.exe` will seemingly do nothing, and this needs to be run via a cmdprompt or 
+Windows PowerShell window. 
+
+### Setting up to use the UUU
+
+In order to use the UUU on the i.MX8M EVK, we need to set BOOT_MODE_0 and BOOT_MODE_1 pins to serial download mode:
+  * SW1101 - 10XXXXXXXX
+
+The below image shows the two pins in the default configuration, these needs to be switched for serial download.
+
+![](https://github.com/mworster/imx8MMini-EVK/blob/main/Serial_Download_jumpers.jpg)
+
+Once serial download has been selected, next we connect a USB type C cable from the host computer to the EVK on Port 1 (Download).
 
 ### Install Programming Tool
 
@@ -357,10 +358,12 @@ Generated files are :
 
 1. https://github.com/mworster/imx8MMini-EVK/blob/main/8MMINIEVKQSG.PDF
 2. https://github.com/mworster/imx8MMini-EVK/blob/main/initial_eeprom_boot.log
-3. https://wiki.st.com/stm32mpu/wiki/STM32MP15_Discovery_kits_-_Starter_Package
-4. https://wiki.st.com/stm32mpu/wiki/How_to_get_Terminal
-5. https://wiki.st.com/stm32mpu/wiki/STM32MP15_Discovery_kits_-_Starter_Package#Downloading_the_image_and_flashing_it_on_the_board
-6. https://st.com/content/ccc/resource/technical/software/firmware/group0/e2/88/93/37/bc/48/41/cb/STM32MP15_OpenSTLinux_Starter_Package/files/FLASH-stm32mp1-openstlinux-5-4-dunfell-mp1-20-11-12.tar.xz/jcr:content/translations/en.FLASH-stm32mp1-openstlinux-5-4-dunfell-mp1-20-11-12.tar.xz
-7. https://wiki.st.com/stm32mpu/wiki/STM32MP15_Discovery_kits_-_Starter_Package#Installing_the_tools
-8. https://wiki.st.com/stm32mpu/wiki/STM32MP1_Developer_Package
-9. https://wiki.st.com/stm32mpu/wiki/STM32MP1_Developer_Package#Installing_the_Linux_kernel
+3. https://www.nxp.com/design/development-boards/i-mx-evaluation-and-development-boards/evaluation-kit-for-the-i-mx-8m-mini-applications-processor:8MMINILPD4-EVK?tid=vanimx8mminievk
+4. https://github.com/NXPmicro/mfgtools/releases
+5. 
+6. https://wiki.st.com/stm32mpu/wiki/How_to_get_Terminal
+7. https://wiki.st.com/stm32mpu/wiki/STM32MP15_Discovery_kits_-_Starter_Package#Downloading_the_image_and_flashing_it_on_the_board
+8. https://st.com/content/ccc/resource/technical/software/firmware/group0/e2/88/93/37/bc/48/41/cb/STM32MP15_OpenSTLinux_Starter_Package/files/FLASH-stm32mp1-openstlinux-5-4-dunfell-mp1-20-11-12.tar.xz/jcr:content/translations/en.FLASH-stm32mp1-openstlinux-5-4-dunfell-mp1-20-11-12.tar.xz
+9. https://wiki.st.com/stm32mpu/wiki/STM32MP15_Discovery_kits_-_Starter_Package#Installing_the_tools
+10. https://wiki.st.com/stm32mpu/wiki/STM32MP1_Developer_Package
+11. https://wiki.st.com/stm32mpu/wiki/STM32MP1_Developer_Package#Installing_the_Linux_kernel
