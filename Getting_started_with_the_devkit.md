@@ -134,6 +134,9 @@ And releases are available at: https://github.com/NXPmicro/mfgtools/releases
 The UUU is a command line program, so clicking on the `uuu.exe` will seemingly do nothing, and this needs to be run via a cmdprompt or 
 Windows PowerShell window. 
 
+The UUU is controlled by the `uuu.auto` file. This is a text based file with that instructs UUU which commands to send to FB in order to 
+correctly pick the programming partition. 
+
 ### Setting up to use the UUU
 
 In order to use the UUU on the i.MX8M EVK, we need to set BOOT_MODE_0 and BOOT_MODE_1 pins to serial download mode:
@@ -144,6 +147,34 @@ The below image shows the two pins in the default configuration, these needs to 
 ![](https://github.com/mworster/imx8MMini-EVK/blob/main/Serial_Download_jumpers.jpg)
 
 Once serial download has been selected, next we connect a USB type C cable from the host computer to the EVK on Port 1 (Download).
+
+We need some binaries to flash on the board. That can come from [3] as there are pre-released binaries here. In our case we'll use
+the current latest Linux images: LF_v5.10_1.0.0_images_IMX8MMEVK.zip
+Unzip the files and verify there is a "uuu.auto" in the directory. Navigate your command prompt (or powershell) to the unzipped
+location. 
+
+In powershell simply execute: 
+
+`> uuu.exe uuu.auto`
+
+in order to use the script verbatium and program the Linux 5.10 image to the board. The script will relay information to the
+shell showing the progress as seen below:
+
+![](https://github.com/mworster/imx8MMini-EVK/blob/main/uuu_in_progress.jpg)
+
+By default this will flash to the emmc since the default uuu.auto script points the FB flash to emmc: 
+`FB: ucmd setenv mmcdev ${emmc_dev}`
+
+Once the scirpt is complete, the power should be removed, and the boot mode pins reset. On the next boot we can see that the emmc
+has been successfully updated:
+
+    Starting kernel ...
+
+    unable to select a mode
+    device_remove: Device 'mmc@30b60000.blk' failed to remove, but children are gone
+    [    0.000000] Booting Linux on physical CPU 0x0000000000 [0x410fd034]
+    [    0.000000] Linux version 5.10.9-1.0.0+g32513c25d8c7 (oe-user@oe-host) (aarch64-poky-linux-gcc (GCC) 10.2.0, GNU ld (GNU Binutils) 2.35.0.20200730) #1 SMP PREEMPT Tue Mar 9 02:17:18 UTC 2021
+    [    0.000000] Machine model: FSL i.MX8MM EVK board
 
 ### Install Programming Tool
 
