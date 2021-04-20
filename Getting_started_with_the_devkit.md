@@ -176,11 +176,13 @@ has been successfully updated:
     [    0.000000] Linux version 5.10.9-1.0.0+g32513c25d8c7 (oe-user@oe-host) (aarch64-poky-linux-gcc (GCC) 10.2.0, GNU ld (GNU Binutils) 2.35.0.20200730) #1 SMP PREEMPT Tue Mar 9 02:17:18 UTC 2021
     [    0.000000] Machine model: FSL i.MX8MM EVK board
 
-### Install Programming Tool
+### Flashing the SD card
 
-The STM32CubeProgrammer tool is used to flash the STM32MP157x-DKx Discovery kit, the µSD card is default flash device, and the trusted boot chain is the default solution for booting.
-The tools[7] can be downloaded from the link [here.](https://www.st.com/en/development-tools/stm32cubeprog.html). Once the package has been downloded, it can be extracted
-and (on windows) `SetupSTM32CubeProgrammer-2.5.0.exe` can be run to install the tools. Follow the wizard to install the tools on your PC in the default paths. 
+UUU can be used to flash the uSD card as well as the emmc. This can be done via a built in command:
+
+    uuu -b sd_all imx-boot-imx8mmevk-sd.bin-flash_evk imx-image-multimedia-imx8mmevk.wic
+
+The built in commands cover flashing portions (just bootloader or root file system) or can be used to do a full flash as above.
 
 ### Setup the board for flashing
 
